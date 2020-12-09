@@ -12,19 +12,22 @@ public class WeatherTime {
         this.weatherApi = weatherApi;
     }
 
-
     public WeatherReport getWeatherReportForCity(String city) {
         CurrentWeatherData currentWeatherData = weatherApi.getCurrentWeatherData(city);
-        CurrentWeatherReport currentWeatherReport = new CurrentWeatherReport();
-
-        currentWeatherReport.setDate(currentWeatherData.getDt().toString());
-        currentWeatherReport.setHumidity(currentWeatherData.getMain().getHumidity());
-        currentWeatherReport.setPressure(currentWeatherData.getMain().getPressure());
-        currentWeatherReport.setTemperature(currentWeatherData.getMain().getTemp());
+        CurrentWeatherReport currentWeatherReport = getInitializedCurrentWeatherReport(currentWeatherData);
 
         WeatherReport weatherReport = new WeatherReport();
         weatherReport.setCurrentWeatherReport(currentWeatherReport);
 
         return weatherReport;
+    }
+
+    private CurrentWeatherReport getInitializedCurrentWeatherReport(CurrentWeatherData currentWeatherData) {
+        CurrentWeatherReport currentWeatherReport = new CurrentWeatherReport();
+        currentWeatherReport.setDate(currentWeatherData.getDt().toString());
+        currentWeatherReport.setHumidity(currentWeatherData.getMain().getHumidity());
+        currentWeatherReport.setPressure(currentWeatherData.getMain().getPressure());
+        currentWeatherReport.setTemperature(currentWeatherData.getMain().getTemp());
+        return currentWeatherReport;
     }
 }
