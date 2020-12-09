@@ -1,4 +1,4 @@
-package project;
+package ee.icd0004.project;
 
 import ee.icd0004.project.api.WeatherApi;
 import ee.icd0004.project.api.model.CurrentWeatherData;
