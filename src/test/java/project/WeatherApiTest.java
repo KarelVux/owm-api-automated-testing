@@ -21,6 +21,6 @@ public class WeatherApiTest {
 
         CurrentWeatherData currentWeatherData = weatherApi.getCurrentWeatherData(city);
 
-        assertThat(currentWeatherData).isNotNull();
+        assertThat(currentWeatherData).isNull();
     }
 }
