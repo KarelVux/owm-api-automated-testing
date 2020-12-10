@@ -35,7 +35,7 @@ public class WeatherTime {
     private WeatherReportDetails getInitializedWeatherReportDetails(CurrentWeatherData currentWeatherData, String temperatureUnit) {
         WeatherReportDetails weatherReportDetails = new WeatherReportDetails();
         weatherReportDetails.setCity(currentWeatherData.getName());
-        weatherReportDetails.setCoordinates(currentWeatherData.getCoord().toString());
+        weatherReportDetails.setCoordinates(currentWeatherData.getCoord());
         weatherReportDetails.setTemperatureUnit(temperatureUnit);
         return weatherReportDetails;
     }
