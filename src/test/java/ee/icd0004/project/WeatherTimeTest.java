@@ -24,4 +24,13 @@ public class WeatherTimeTest {
         assertThat(weatherReport.getCurrentWeatherReport()).hasNoNullFieldsOrProperties();
     }
 
+    @Test
+    public void should_have_weather_report_details_in_weather_report() {
+        String city = "Tallinn";
+
+        WeatherReport weatherReport = weatherTime.getWeatherReportForCity(city);
+
+        assertThat(weatherReport.getWeatherReportDetails()).hasNoNullFieldsOrProperties();
+    }
+
 }
