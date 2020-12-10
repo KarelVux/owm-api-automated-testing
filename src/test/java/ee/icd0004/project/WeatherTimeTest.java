@@ -2,6 +2,7 @@ package ee.icd0004.project;
 
 import ee.icd0004.project.api.WeatherApi;
 import ee.icd0004.project.model.WeatherReport;
+import org.assertj.core.data.Percentage;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -36,15 +37,18 @@ public class WeatherTimeTest {
     @Test
     public void should_have_current_weather_report_data_in_imperial() {
         String city = "Tallinn";
-        String temperatureUnit = "imperial";
+        String imperialTemperatureUnit = "imperial";
+        String metricTemperatureUnit = "metric";
 
-        WeatherReport weatherReport = weatherTime.getWeatherReportForCity(city, temperatureUnit);
+        WeatherReport imperialWeatherReport = weatherTime.getWeatherReportForCity(city, imperialTemperatureUnit);
+        WeatherReport metricWeatherReport = weatherTime.getWeatherReportForCity(city, metricTemperatureUnit);
+        Double imperialTemperature = getTemperature(imperialWeatherReport);
+        Double metricTemperature = getTemperature(metricWeatherReport);
 
-        System.out.println(weatherReport);
-
-        assertThat(weatherReport.getWeatherReportDetails().getTemperatureUnit().toLowerCase())
-                .isEqualTo(temperatureUnit.toLowerCase());
+        assertThat(metricTemperature * (9.0 / 5.0) + 32).isCloseTo(imperialTemperature, Percentage.withPercentage(1));
     }
 
-
+    private Double getTemperature(WeatherReport weatherReport) {
+        return weatherReport.getCurrentWeatherReport().getTemperature();
+    }
 }

@@ -5,30 +5,27 @@ import ee.icd0004.project.api.model.CurrentWeatherData;
 import ee.icd0004.project.model.CurrentWeatherReport;
 import ee.icd0004.project.model.WeatherReport;
 import ee.icd0004.project.model.WeatherReportDetails;
-import lombok.Setter;
 
 public class WeatherTime {
     private final WeatherApi weatherApi;
-    @Setter
-    private String units = "Metric";
 
     public WeatherTime(WeatherApi weatherApi) {
         this.weatherApi = weatherApi;
     }
 
     public WeatherReport getWeatherReportForCity(String city, String temperatureUnit) {
-        return getInitializedWeatherReport(city, temperatureUnit);
+        weatherApi.setUnits(temperatureUnit);
+        return getInitializedWeatherReport(city);
     }
 
     public WeatherReport getWeatherReportForCity(String city) {
-        return getInitializedWeatherReport(city, units);
+        return getInitializedWeatherReport(city);
     }
 
-    public WeatherReport getInitializedWeatherReport(String city, String temperatureUnit) {
-        weatherApi.setUnits(temperatureUnit);
+    public WeatherReport getInitializedWeatherReport(String city) {
         CurrentWeatherData currentWeatherData = weatherApi.getCurrentWeatherData(city);
         CurrentWeatherReport currentWeatherReport = getInitializedCurrentWeatherReport(currentWeatherData);
-        WeatherReportDetails weatherReportDetails = getInitializedWeatherReportDetails(currentWeatherData, temperatureUnit);
+        WeatherReportDetails weatherReportDetails = getInitializedWeatherReportDetails(currentWeatherData);
 
         WeatherReport weatherReport = new WeatherReport();
         weatherReport.setCurrentWeatherReport(currentWeatherReport);
@@ -37,11 +34,11 @@ public class WeatherTime {
         return weatherReport;
     }
 
-    private WeatherReportDetails getInitializedWeatherReportDetails(CurrentWeatherData currentWeatherData, String temperatureUnit) {
+    private WeatherReportDetails getInitializedWeatherReportDetails(CurrentWeatherData currentWeatherData) {
         WeatherReportDetails weatherReportDetails = new WeatherReportDetails();
         weatherReportDetails.setCity(currentWeatherData.getName());
         weatherReportDetails.setCoordinates(currentWeatherData.getCoord());
-        weatherReportDetails.setTemperatureUnit(temperatureUnit);
+        weatherReportDetails.setTemperatureUnit(weatherApi.getUnits());
         return weatherReportDetails;
     }
 

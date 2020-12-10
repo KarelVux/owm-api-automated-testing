@@ -5,6 +5,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import ee.icd0004.project.api.model.CurrentWeatherData;
+import lombok.Getter;
 import lombok.Setter;
 import org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider;
 
@@ -15,6 +16,7 @@ public class WeatherApi {
     private static final String BASE_URL = "http://api.openweathermap.org/data/2.5/";
     private static final String API_KEY = "3a67da1c6356383a2537495317e64315";
     @Setter
+    @Getter
     private  String units = "metric";
 
     public CurrentWeatherData getCurrentWeatherData(String city) {
