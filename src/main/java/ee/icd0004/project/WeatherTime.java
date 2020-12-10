@@ -2,6 +2,7 @@ package ee.icd0004.project;
 
 import ee.icd0004.project.api.WeatherApi;
 import ee.icd0004.project.api.model.CurrentWeatherData;
+import ee.icd0004.project.exception.IllegalMeasurementUnitException;
 import ee.icd0004.project.model.CurrentWeatherReport;
 import ee.icd0004.project.model.WeatherReport;
 import ee.icd0004.project.model.WeatherReportDetails;
@@ -38,7 +39,11 @@ public class WeatherTime {
         WeatherReportDetails weatherReportDetails = new WeatherReportDetails();
         weatherReportDetails.setCity(currentWeatherData.getName());
         weatherReportDetails.setCoordinates(currentWeatherData.getCoord());
-        weatherReportDetails.setTemperatureUnit(weatherApi.getUnits());
+        try {
+            weatherReportDetails.setTemperatureUnit(weatherApi.getUnits());
+        } catch (IllegalMeasurementUnitException e) {
+            e.printStackTrace();
+        }
         return weatherReportDetails;
     }
 
