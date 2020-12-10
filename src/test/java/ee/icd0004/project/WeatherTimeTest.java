@@ -21,6 +21,7 @@ public class WeatherTimeTest {
 
         WeatherReport weatherReport = weatherTime.getWeatherReportForCity(city);
 
-        assertThat(weatherReport.getCurrentWeatherReport()).isNotNull();
+        assertThat(weatherReport.getCurrentWeatherReport()).hasNoNullFieldsOrProperties();
     }
+
 }
