@@ -23,18 +23,21 @@ public class WeatherTime {
     public WeatherReport getInitializedWeatherReport(String city, String temperatureUnit) {
         CurrentWeatherData currentWeatherData = weatherApi.getCurrentWeatherData(city);
         CurrentWeatherReport currentWeatherReport = getInitializedCurrentWeatherReport(currentWeatherData);
-
-        WeatherReportDetails weatherReportDetails = new WeatherReportDetails();
-
-        weatherReportDetails.setCity(currentWeatherData.getName());
-        weatherReportDetails.setCoordinates(currentWeatherData.getCoord().toString());
-        weatherReportDetails.setTemperatureUnit(temperatureUnit);
+        WeatherReportDetails weatherReportDetails = getInitializedWeatherReportDetails(currentWeatherData, temperatureUnit);
 
         WeatherReport weatherReport = new WeatherReport();
         weatherReport.setCurrentWeatherReport(currentWeatherReport);
         weatherReport.setWeatherReportDetails(weatherReportDetails);
 
         return weatherReport;
+    }
+
+    private WeatherReportDetails getInitializedWeatherReportDetails(CurrentWeatherData currentWeatherData, String temperatureUnit) {
+        WeatherReportDetails weatherReportDetails = new WeatherReportDetails();
+        weatherReportDetails.setCity(currentWeatherData.getName());
+        weatherReportDetails.setCoordinates(currentWeatherData.getCoord().toString());
+        weatherReportDetails.setTemperatureUnit(temperatureUnit);
+        return weatherReportDetails;
     }
 
     private CurrentWeatherReport getInitializedCurrentWeatherReport(CurrentWeatherData currentWeatherData) {
