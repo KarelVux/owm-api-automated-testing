@@ -24,7 +24,7 @@ public class WeatherTime {
 
     private CurrentWeatherReport getInitializedCurrentWeatherReport(CurrentWeatherData currentWeatherData) {
         CurrentWeatherReport currentWeatherReport = new CurrentWeatherReport();
-        currentWeatherReport.setDate(currentWeatherData.getDt().toString());
+        currentWeatherReport.setDate(currentWeatherData.getDt());
         currentWeatherReport.setHumidity(currentWeatherData.getMain().getHumidity());
         currentWeatherReport.setPressure(currentWeatherData.getMain().getPressure());
         currentWeatherReport.setTemperature(currentWeatherData.getMain().getTemp());
