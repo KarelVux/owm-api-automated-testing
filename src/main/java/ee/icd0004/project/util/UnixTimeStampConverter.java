@@ -9,9 +9,7 @@ import java.util.TimeZone;
 
 @AllArgsConstructor
 public class UnixTimeStampConverter {
-    private Integer unixTimeStamp;
-
-    public String getDateAsString() {
+    public String getDateAsString(Integer unixTimeStamp) {
 
         // https://stackoverflow.com/questions/45392163/java-get-current-day-from-unix-timestamp
         Date date = new Date(unixTimeStamp * 1000L);

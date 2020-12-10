@@ -11,7 +11,7 @@ public class CurrentWeatherReport {
     private Double pressure;
 
     public void setDate(Integer date) {
-        UnixTimeStampConverter unixTimeStampConverter = new UnixTimeStampConverter(date);
-        this.date = unixTimeStampConverter.getDateAsString();
+        UnixTimeStampConverter unixTimeStampConverter = new UnixTimeStampConverter();
+        this.date = unixTimeStampConverter.getDateAsString(date);
     }
 }
