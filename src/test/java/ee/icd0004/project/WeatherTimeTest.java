@@ -30,6 +30,8 @@ public class WeatherTimeTest {
 
         WeatherReport weatherReport = weatherTime.getWeatherReportForCity(city);
 
+        System.out.println(weatherReport.getWeatherReportDetails());
+
         assertThat(weatherReport.getWeatherReportDetails()).hasNoNullFieldsOrProperties();
     }
 

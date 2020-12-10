@@ -9,4 +9,5 @@ public class CurrentWeatherData {
     private Coordiantes coord;
     private Main main;
     private Integer dt;
+    private String name;
 }

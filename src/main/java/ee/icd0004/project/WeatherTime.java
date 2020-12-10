@@ -4,20 +4,35 @@ import ee.icd0004.project.api.WeatherApi;
 import ee.icd0004.project.api.model.CurrentWeatherData;
 import ee.icd0004.project.model.CurrentWeatherReport;
 import ee.icd0004.project.model.WeatherReport;
+import ee.icd0004.project.model.WeatherReportDetails;
+import lombok.Setter;
 
 public class WeatherTime {
     private final WeatherApi weatherApi;
+    @Setter
+    private String units = "Metric";
 
     public WeatherTime(WeatherApi weatherApi) {
         this.weatherApi = weatherApi;
     }
 
     public WeatherReport getWeatherReportForCity(String city) {
+        return getInitializedWeatherReport(city, units);
+    }
+
+    public WeatherReport getInitializedWeatherReport(String city, String temperatureUnit) {
         CurrentWeatherData currentWeatherData = weatherApi.getCurrentWeatherData(city);
         CurrentWeatherReport currentWeatherReport = getInitializedCurrentWeatherReport(currentWeatherData);
 
+        WeatherReportDetails weatherReportDetails = new WeatherReportDetails();
+
+        weatherReportDetails.setCity(currentWeatherData.getName());
+        weatherReportDetails.setCoordinates(currentWeatherData.getCoord().toString());
+        weatherReportDetails.setTemperatureUnit(temperatureUnit);
+
         WeatherReport weatherReport = new WeatherReport();
         weatherReport.setCurrentWeatherReport(currentWeatherReport);
+        weatherReport.setWeatherReportDetails(weatherReportDetails);
 
         return weatherReport;
     }
