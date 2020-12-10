@@ -16,11 +16,16 @@ public class WeatherTime {
         this.weatherApi = weatherApi;
     }
 
+    public WeatherReport getWeatherReportForCity(String city, String temperatureUnit) {
+        return getInitializedWeatherReport(city, temperatureUnit);
+    }
+
     public WeatherReport getWeatherReportForCity(String city) {
         return getInitializedWeatherReport(city, units);
     }
 
     public WeatherReport getInitializedWeatherReport(String city, String temperatureUnit) {
+        weatherApi.setUnits(temperatureUnit);
         CurrentWeatherData currentWeatherData = weatherApi.getCurrentWeatherData(city);
         CurrentWeatherReport currentWeatherReport = getInitializedCurrentWeatherReport(currentWeatherData);
         WeatherReportDetails weatherReportDetails = getInitializedWeatherReportDetails(currentWeatherData, temperatureUnit);

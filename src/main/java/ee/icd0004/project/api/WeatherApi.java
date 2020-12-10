@@ -5,6 +5,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import ee.icd0004.project.api.model.CurrentWeatherData;
+import lombok.Setter;
 import org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider;
 
 import static com.sun.jersey.api.client.Client.create;
@@ -13,7 +14,8 @@ import static com.sun.jersey.api.json.JSONConfiguration.FEATURE_POJO_MAPPING;
 public class WeatherApi {
     private static final String BASE_URL = "http://api.openweathermap.org/data/2.5/";
     private static final String API_KEY = "3a67da1c6356383a2537495317e64315";
-    private static final String UNITS = "metric";
+    @Setter
+    private  String units = "metric";
 
     public CurrentWeatherData getCurrentWeatherData(String city) {
         Client client = getConfiguredClient();
@@ -22,7 +24,7 @@ public class WeatherApi {
         ClientResponse response = client.resource(resourceUrl)
                 .queryParam("q", city)
                 .queryParam("appId", API_KEY)
-                .queryParam("units", UNITS)
+                .queryParam("units", units)
                 .get(ClientResponse.class);
 
         return response.getEntity(CurrentWeatherData.class);

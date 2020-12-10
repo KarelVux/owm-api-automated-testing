@@ -36,9 +36,11 @@ public class WeatherTimeTest {
     @Test
     public void should_have_current_weather_report_data_in_imperial() {
         String city = "Tallinn";
-        String temperatureUnit = "Imperial";
+        String temperatureUnit = "imperial";
 
         WeatherReport weatherReport = weatherTime.getWeatherReportForCity(city, temperatureUnit);
+
+        System.out.println(weatherReport);
 
         assertThat(weatherReport.getWeatherReportDetails().getTemperatureUnit().toLowerCase())
                 .isEqualTo(temperatureUnit.toLowerCase());
