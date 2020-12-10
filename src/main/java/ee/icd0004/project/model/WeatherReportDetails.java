@@ -10,8 +10,13 @@ public class WeatherReportDetails {
     private String temperatureUnit;
 
     public void setCoordinates(Coordiantes coordinates) {
+
         this.coordinates = String.format("%s,%s",
-                Math.floor(coordinates.getLat() * 100.0) / 100.0,
-                Math.floor(coordinates.getLon() * 100.0) / 100.0);
+                truncateDoubleToTwoDecimalPlaces(coordinates.getLat()),
+                truncateDoubleToTwoDecimalPlaces(coordinates.getLon()));
+    }
+
+    private Double truncateDoubleToTwoDecimalPlaces(Double number) {
+        return Math.floor(number * 100) / 100;
     }
 }
