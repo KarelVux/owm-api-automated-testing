@@ -33,4 +33,16 @@ public class WeatherTimeTest {
         assertThat(weatherReport.getWeatherReportDetails()).hasNoNullFieldsOrProperties();
     }
 
+    @Test
+    public void should_have_current_weather_report_data_in_imperial() {
+        String city = "Tallinn";
+        String temperatureUnit = "Imperial";
+
+        WeatherReport weatherReport = weatherTime.getWeatherReportForCity(city, temperatureUnit);
+
+        assertThat(weatherReport.getWeatherReportDetails().getTemperatureUnit().toLowerCase())
+                .isEqualTo(temperatureUnit.toLowerCase());
+    }
+
+
 }
