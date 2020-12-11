@@ -19,6 +19,7 @@ public class WeatherReportDetails {
                 truncateDoubleToTwoDecimalPlaces(coordinates.getLat()),
                 truncateDoubleToTwoDecimalPlaces(coordinates.getLon()));
     }
+
     public void setTemperatureUnit(String temperatureUnit) throws IllegalMeasurementUnitException {
         List<String> allowedUnits = Arrays.asList("standard", "metric", "imperial");
         if (allowedUnits.stream().anyMatch(p -> p.toLowerCase().equals(temperatureUnit.toLowerCase()))) {
@@ -27,9 +28,8 @@ public class WeatherReportDetails {
         }
         throw new IllegalMeasurementUnitException("Contains illegal unit");
     }
+
     private Double truncateDoubleToTwoDecimalPlaces(Double number) {
         return Math.floor(number * 100) / 100;
     }
-
-
 }
