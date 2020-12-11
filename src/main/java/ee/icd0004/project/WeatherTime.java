@@ -2,8 +2,11 @@ package ee.icd0004.project;
 
 import ee.icd0004.project.api.WeatherApi;
 import ee.icd0004.project.api.model.CurrentWeatherData;
+import ee.icd0004.project.api.model.ForecastData;
+import ee.icd0004.project.dao.ForecastDao;
 import ee.icd0004.project.exception.IllegalMeasurementUnitException;
 import ee.icd0004.project.model.CurrentWeatherReport;
+import ee.icd0004.project.model.ForecastReport;
 import ee.icd0004.project.model.WeatherReport;
 import ee.icd0004.project.model.WeatherReportDetails;
 
@@ -55,5 +58,23 @@ public class WeatherTime {
         currentWeatherReport.setPressure(currentWeatherData.getMain().getPressure());
         currentWeatherReport.setTemperature(currentWeatherData.getMain().getTemp());
         return currentWeatherReport;
+    }
+
+    public WeatherReport getWeatherReportForCityWithForecast(String city) {
+        CurrentWeatherData currentWeatherData = weatherApi.getCurrentWeatherData(city);
+        ForecastData forecastWeatherData = weatherApi.get5DayForecastWeatherData(city);
+
+        CurrentWeatherReport currentWeatherReport = getInitializedCurrentWeatherReport(currentWeatherData);
+        WeatherReportDetails weatherReportDetails = getInitializedWeatherReportDetails(currentWeatherData);
+
+        ForecastDao forecastDao = new ForecastDao();
+        ForecastReport forecastReport = forecastDao.getFormattedForecastFor5Days(forecastWeatherData);
+
+        WeatherReport weatherReport = new WeatherReport();
+        weatherReport.setCurrentWeatherReport(currentWeatherReport);
+        weatherReport.setWeatherReportDetails(weatherReportDetails);
+        weatherReport.setForecastReport(forecastReport);
+
+        return weatherReport;
     }
 }
