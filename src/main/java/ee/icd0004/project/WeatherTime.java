@@ -61,18 +61,12 @@ public class WeatherTime {
     }
 
     public WeatherReport getWeatherReportForCityWithForecast(String city) {
-        CurrentWeatherData currentWeatherData = weatherApi.getCurrentWeatherData(city);
         ForecastData forecastWeatherData = weatherApi.get5DayForecastWeatherData(city);
-
-        CurrentWeatherReport currentWeatherReport = getInitializedCurrentWeatherReport(currentWeatherData);
-        WeatherReportDetails weatherReportDetails = getInitializedWeatherReportDetails(currentWeatherData);
 
         ForecastDao forecastDao = new ForecastDao();
         ForecastReport forecastReport = forecastDao.getFormattedForecastFor5Days(forecastWeatherData);
 
-        WeatherReport weatherReport = new WeatherReport();
-        weatherReport.setCurrentWeatherReport(currentWeatherReport);
-        weatherReport.setWeatherReportDetails(weatherReportDetails);
+        WeatherReport weatherReport = getInitializedWeatherReport(city);
         weatherReport.setForecastReport(forecastReport);
 
         return weatherReport;

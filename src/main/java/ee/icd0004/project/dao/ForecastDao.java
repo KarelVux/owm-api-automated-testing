@@ -12,7 +12,7 @@ import java.util.List;
 public class ForecastDao {
 
     public ForecastReport getFormattedForecastFor5Days(ForecastData forecastData) {
-        List<DailyWeather> dailyWeathers = new ArrayList<>();
+        List<DailyWeather> weatherList = new ArrayList<>();
 
         for (Forecast forecast : forecastData.getList()) {
             DailyWeather dailyWeather = new DailyWeather();
@@ -23,11 +23,11 @@ public class ForecastDao {
             dailyWeather.setPressure(forecastMain.getPressure());
             dailyWeather.setHumidity(forecastMain.getHumidity());
 
-            dailyWeathers.add(dailyWeather);
+            weatherList.add(dailyWeather);
         }
 
         ForecastReport forecastReport = new ForecastReport();
-        forecastReport.setDailyWeathers(dailyWeathers);
+        forecastReport.setDailyWeathers(weatherList);
         return forecastReport;
     }
 }
