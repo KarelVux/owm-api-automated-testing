@@ -39,10 +39,11 @@ public class WeatherTime {
         WeatherReportDetails weatherReportDetails = new WeatherReportDetails();
         weatherReportDetails.setCity(currentWeatherData.getName());
         weatherReportDetails.setCoordinates(currentWeatherData.getCoord());
+
         try {
             weatherReportDetails.setTemperatureUnit(weatherApi.getUnits());
         } catch (IllegalMeasurementUnitException e) {
-            e.printStackTrace();
+            throw new IllegalMeasurementUnitException("Invalid unit of measurement: " + e);
         }
         return weatherReportDetails;
     }
