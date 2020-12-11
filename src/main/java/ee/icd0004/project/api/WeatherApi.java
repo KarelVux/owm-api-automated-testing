@@ -21,14 +21,9 @@ public class WeatherApi {
     private  String units = "metric";
 
     public CurrentWeatherData getCurrentWeatherData(String city) {
-        Client client = getConfiguredClient();
+        // https://openweathermap.org/current
         String resourceUrl = BASE_URL + "/weather";
-
-        ClientResponse response = client.resource(resourceUrl)
-                .queryParam("q", city)
-                .queryParam("appId", API_KEY)
-                .queryParam("units", units)
-                .get(ClientResponse.class);
+        ClientResponse response = getOwmApiConnectionData(city, resourceUrl);
 
         return response.getEntity(CurrentWeatherData.class);
     }
@@ -41,18 +36,20 @@ public class WeatherApi {
         return create(configuration);
     }
 
-    public ForecastData getForecastWeatherData(String city, Integer numberOfDays) {
-        String numberOfRequests = String.valueOf(numberOfDays * 8);
-        Client client = getConfiguredClient();
+    public ForecastData get5DayForecastWeatherData(String city) {
+        // https://openweathermap.org/forecast5
         String resourceUrl = BASE_URL + "/forecast";
+        ClientResponse response = getOwmApiConnectionData(city, resourceUrl);
 
-        ClientResponse response = client.resource(resourceUrl)
+        return response.getEntity(ForecastData.class);
+    }
+
+    private ClientResponse getOwmApiConnectionData(String city, String resourceUrl) {
+        Client client = getConfiguredClient();
+        return client.resource(resourceUrl)
                 .queryParam("q", city)
                 .queryParam("appId", API_KEY)
                 .queryParam("units", units)
-                .queryParam("cnt", numberOfRequests)
                 .get(ClientResponse.class);
-
-        return response.getEntity(ForecastData.class);
     }
 }

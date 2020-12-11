@@ -28,9 +28,8 @@ public class WeatherApiTest {
     @Test
     public void  should_have_connection_from_owm_api_forecast_data(){
         String city = "Tallinn";
-        Integer numberOfDays = 3;
 
-        ForecastData forecastData = weatherApi.getForecastWeatherData(city,  numberOfDays);
+        ForecastData forecastData = weatherApi.get5DayForecastWeatherData(city);
 
         assertThat(forecastData).isNotNull();
     }
