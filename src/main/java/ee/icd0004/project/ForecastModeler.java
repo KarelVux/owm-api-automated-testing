@@ -1,4 +1,4 @@
-package ee.icd0004.project.dao;
+package ee.icd0004.project;
 
 import ee.icd0004.project.api.model.Forecast;
 import ee.icd0004.project.api.model.ForecastData;
@@ -9,7 +9,7 @@ import ee.icd0004.project.model.ForecastReport;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ForecastDao {
+public class ForecastModeler {
 
     public ForecastReport getFormattedForecastFor5Days(ForecastData forecastData) {
         List<DailyWeather> weatherList = new ArrayList<>();

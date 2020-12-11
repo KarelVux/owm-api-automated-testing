@@ -3,7 +3,6 @@ package ee.icd0004.project;
 import ee.icd0004.project.api.WeatherApi;
 import ee.icd0004.project.api.model.CurrentWeatherData;
 import ee.icd0004.project.api.model.ForecastData;
-import ee.icd0004.project.dao.ForecastDao;
 import ee.icd0004.project.exception.IllegalMeasurementUnitException;
 import ee.icd0004.project.model.CurrentWeatherReport;
 import ee.icd0004.project.model.ForecastReport;
@@ -63,8 +62,8 @@ public class WeatherTime {
     public WeatherReport getWeatherReportForCityWithForecast(String city) {
         ForecastData forecastWeatherData = weatherApi.get5DayForecastWeatherData(city);
 
-        ForecastDao forecastDao = new ForecastDao();
-        ForecastReport forecastReport = forecastDao.getFormattedForecastFor5Days(forecastWeatherData);
+        ForecastModeler forecastModeler = new ForecastModeler();
+        ForecastReport forecastReport = forecastModeler.getFormattedForecastFor5Days(forecastWeatherData);
 
         WeatherReport weatherReport = getInitializedWeatherReport(city);
         weatherReport.setForecastReport(forecastReport);
