@@ -5,6 +5,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import ee.icd0004.project.api.model.CurrentWeatherData;
+import ee.icd0004.project.api.model.ForecastData;
 import lombok.Getter;
 import lombok.Setter;
 import org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider;
@@ -40,4 +41,18 @@ public class WeatherApi {
         return create(configuration);
     }
 
+    public ForecastData getForecastWeatherData(String city, Integer numberOfDays) {
+        String numberOfRequests = String.valueOf(numberOfDays * 8);
+        Client client = getConfiguredClient();
+        String resourceUrl = BASE_URL + "/forecast";
+
+        ClientResponse response = client.resource(resourceUrl)
+                .queryParam("q", city)
+                .queryParam("appId", API_KEY)
+                .queryParam("units", units)
+                .queryParam("cnt", numberOfRequests)
+                .get(ClientResponse.class);
+
+        return response.getEntity(ForecastData.class);
+    }
 }

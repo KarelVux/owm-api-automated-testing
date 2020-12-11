@@ -2,6 +2,7 @@ package ee.icd0004.project;
 
 import ee.icd0004.project.api.WeatherApi;
 import ee.icd0004.project.api.model.CurrentWeatherData;
+import ee.icd0004.project.api.model.ForecastData;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -27,6 +28,7 @@ public class WeatherApiTest {
     @Test
     public void  should_have_connection_from_owm_api_forecast_data(){
         String city = "Tallinn";
+        Integer numberOfDays = 3;
 
         ForecastData forecastData = weatherApi.getForecastWeatherData(city,  numberOfDays);
 
