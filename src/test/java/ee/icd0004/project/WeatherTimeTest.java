@@ -48,6 +48,15 @@ public class WeatherTimeTest {
         assertThat(metricTemperature * (9.0 / 5.0) + 32).isCloseTo(imperialTemperature, Percentage.withPercentage(1));
     }
 
+    @Test
+    public void should_have_forecast_report_in_weather_report() {
+        String city = "Tallinn";
+
+        WeatherReport weatherReport = weatherTime.getWeatherReportForCityWithForecast(city);
+
+        assertThat(weatherReport.getForecast).hasNoNullFieldsOrProperties();
+    }
+
     private Double getTemperature(WeatherReport weatherReport) {
         return weatherReport.getCurrentWeatherReport().getTemperature();
     }
