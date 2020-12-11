@@ -23,4 +23,13 @@ public class WeatherApiTest {
 
         assertThat(currentWeatherData).isNotNull();
     }
+
+    @Test
+    public void  should_have_connection_from_owm_api_forecast_data(){
+        String city = "Tallinn";
+
+        ForecastData forecastData = weatherApi.getForecastWeatherData(city,  numberOfDays);
+
+        assertThat(forecastData).isNotNull();
+    }
 }

@@ -6,3 +6,4 @@
 6. Weather report measurement data should be in imperial
 7. WeatherReportDetails class will throw error, when temperature unit is not in allowed measurement unit list 
 8. WeatherReport should contain weather report main details
+9. WeatherApi should get connection from owm api's forecast data
