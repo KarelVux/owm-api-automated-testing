@@ -3,10 +3,6 @@ package ee.icd0004.project.model;
 import ee.icd0004.project.util.UnixTimeStampConverter;
 import lombok.Data;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 @Data
 abstract class AbstractDailyWeather {
     private String date;
@@ -21,9 +17,5 @@ abstract class AbstractDailyWeather {
 
     public void setDate(String date) {
         this.date = date;
-    }
-
-    public Date getDateAsDateType() throws ParseException {
-        return new SimpleDateFormat("yyyy-MM-dd").parse(date);
     }
 }
