@@ -11,8 +11,8 @@ public class DailyWeatherTest {
     public void should_have_date_in_correct_format_when_given_unix_timestamp() {
         DailyWeather dailyWeather = new DailyWeather();
 
-        dailyWeather.setDate(1607728325 );
+        dailyWeather.setDate(1607472000);
 
-        assertThat(dailyWeather.getDate()).isEqualTo("2020-12-12");
+        assertThat(dailyWeather.getDate()).isEqualTo("2020-12-09");
     }
 }
