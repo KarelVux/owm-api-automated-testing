@@ -9,3 +9,4 @@
 9. WeatherApi should get connection from owm api's forecast data
 10. WeatherReport should contain forecast data with initialized fields
 11. DailyWeather should return date in correct format when given unix timestamp
+12. ForecastReport daily weather data should be in ascending order
