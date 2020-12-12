@@ -1,4 +1,4 @@
-package ee.icd0004.project;
+package ee.icd0004.project.unit;
 
 import ee.icd0004.project.model.CurrentWeatherReport;
 import org.junit.Test;
