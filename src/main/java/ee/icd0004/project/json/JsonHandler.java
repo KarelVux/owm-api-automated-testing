@@ -15,7 +15,7 @@ public class JsonHandler {
         ObjectMapper objectMapper = new ObjectMapper();
         File file = new File(fileInputPath + name);
 
-        if (!file.getName().contains(".json")){
+        if (!file.getName().endsWith(".json")){
             throw new UnsupportedFileTypeException("File type is not supported");
         }
 
