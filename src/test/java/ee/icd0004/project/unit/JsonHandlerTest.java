@@ -33,7 +33,7 @@ public class JsonHandlerTest {
 
     @Test
     public void should_throw_exception_when_given_unsupported_file_type(){
-        Throwable thrown = catchThrowable(() -> jsonHandler.readCityNameFromJsonFile("unsupported_file_type"));
+        Throwable thrown = catchThrowable(() -> jsonHandler.readCityNameFromJsonFile("unsupported_file_type.txt"));
 
         assertThat(thrown).isInstanceOf(UnsupportedFileTypeException.class);
     }
