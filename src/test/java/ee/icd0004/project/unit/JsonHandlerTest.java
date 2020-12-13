@@ -6,6 +6,7 @@ import ee.icd0004.project.json.JsonHandler;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,5 +36,11 @@ public class JsonHandlerTest {
         Throwable thrown = catchThrowable(() -> jsonHandler.readCityNameFromJsonFile("unsupported_file_type"));
 
         assertThat(thrown).isInstanceOf(UnsupportedFileTypeException.class);
+    }
+    @Test
+    public void should_throw_exception_when_not_existing_file() throws IOException {
+        Throwable thrown = catchThrowable(() -> jsonHandler.readCityNameFromJsonFile("file_not_fount.json"));
+
+        assertThat(thrown).isInstanceOf(FileNotFoundException.class);
     }
 }
