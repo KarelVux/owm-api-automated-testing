@@ -31,9 +31,9 @@ public class WeatherModelerTest {
         String currentDate = dateList.get(0);
 
         forecastData.setList(forecastList);
-        List<DailyWeather> formattedForecastFor5Days = forecastModeler.getFormattedForecastFor3Days(forecastData);
+        List<DailyWeather> formattedForecastFor3Days = forecastModeler.getFormattedForecastFor3Days(forecastData);
 
-        assertThat(getForecastModelerDates(formattedForecastFor5Days)).doesNotContain(currentDate);
+        assertThat(getForecastModelerDates(formattedForecastFor3Days)).doesNotContain(currentDate);
     }
 
     @Test
@@ -43,10 +43,27 @@ public class WeatherModelerTest {
         List<Forecast> forecastList = getInitializedForecastData(dateList);
 
         forecastData.setList(forecastList);
-        List<DailyWeather> formattedForecastFor5Days = forecastModeler.getFormattedForecastFor3Days(forecastData);
+        List<DailyWeather> formattedForecastFor3Days = forecastModeler.getFormattedForecastFor3Days(forecastData);
 
-        assertThat(getForecastModelerDates(formattedForecastFor5Days)).isEqualTo(allowedDates);
+        assertThat(getForecastModelerDates(formattedForecastFor3Days)).isEqualTo(allowedDates);
     }
+
+    @Test
+    public void should_have_average_values_in_daily_weather_data() throws ParseException {
+        initializeGlobalVariables();
+        Double averageValue = 10.;
+        List<Forecast> forecastList = getInitializedForecastData(dateList, averageValue);
+        forecastData.setList(forecastList);
+
+        List<DailyWeather> formattedForecastFor3Days = forecastModeler.getFormattedForecastFor3Days(forecastData);
+
+        for (DailyWeather dailyWeather : formattedForecastFor3Days) {
+            assertThat(dailyWeather.getHumidity()).isEqualTo(averageValue);
+            assertThat(dailyWeather.getTemperature()).isEqualTo(averageValue);
+            assertThat(dailyWeather.getPressure()).isEqualTo(averageValue);
+        }
+    }
+
 
     private void initializeGlobalVariables() {
         forecastData = new ForecastData();
@@ -55,6 +72,10 @@ public class WeatherModelerTest {
     }
 
     private List<Forecast> getInitializedForecastData(List<String> dateList) throws ParseException {
+        return getInitializedForecastData(dateList, 0.);
+    }
+
+    private List<Forecast> getInitializedForecastData(List<String> dateList, Double averageValue) throws ParseException {
         List<Forecast> forecastList = new ArrayList<>();
         UnixTimeStampConverter unixTimeStampConverter = new UnixTimeStampConverter();
 
@@ -64,7 +85,7 @@ public class WeatherModelerTest {
                 forecast.setDt(unixTimeStampConverter.getDateAsUnixTimestamp(date));
                 forecastList.add(forecast);
 
-                Main main = new Main(0., 0., 0.);
+                Main main = new Main(averageValue, averageValue, averageValue);
                 forecast.setMain(main);
             }
         }

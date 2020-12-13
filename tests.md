@@ -12,3 +12,4 @@
 12. ForecastReport daily weather data should be in ascending order
 13. ForecastModeler should not return current date in forecast list
 14. ForecastModeler should return 3 day weather prediction 
+15. ForecastModeler should contain average values for temperature, humidity and pressure
