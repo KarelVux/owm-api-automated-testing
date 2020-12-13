@@ -4,6 +4,7 @@ import ee.icd0004.project.ForecastModeler;
 
 import ee.icd0004.project.api.model.Forecast;
 import ee.icd0004.project.api.model.ForecastData;
+import ee.icd0004.project.api.model.Main;
 import ee.icd0004.project.model.DailyWeather;
 import ee.icd0004.project.util.UnixTimeStampConverter;
 import org.junit.Test;
@@ -23,7 +24,7 @@ public class WeatherModelerTest {
         ForecastData forecastData = new ForecastData();
         ForecastModeler forecastModeler = new ForecastModeler();
         List<String> dateList = getFiveDatesFromCurrentDate();
-        List<Forecast> forecastList = getInitializedForecastDataWithDates(dateList);
+        List<Forecast> forecastList = getInitializedForecastData(dateList);
         String currentDate = dateList.get(0);
 
         forecastData.setList(forecastList);
@@ -32,7 +33,7 @@ public class WeatherModelerTest {
         assertThat(getForecastModelerDates(formattedForecastFor5Days)).doesNotContain(currentDate);
     }
 
-    private List<Forecast> getInitializedForecastDataWithDates(List<String> dateList) throws ParseException {
+    private List<Forecast> getInitializedForecastData(List<String> dateList) throws ParseException {
         List<Forecast> forecastList = new ArrayList<>();
         UnixTimeStampConverter unixTimeStampConverter = new UnixTimeStampConverter();
 
@@ -41,6 +42,9 @@ public class WeatherModelerTest {
                 Forecast forecast = new Forecast();
                 forecast.setDt(unixTimeStampConverter.getDateAsUnixTimestamp(date));
                 forecastList.add(forecast);
+
+                Main main = new Main(0., 0., 0.);
+                forecast.setMain(main);
             }
         }
         return forecastList;
@@ -59,7 +63,7 @@ public class WeatherModelerTest {
         return days;
     }
 
-    private List<String> getForecastModelerDates(List<DailyWeather> dailyWeatherList){
+    private List<String> getForecastModelerDates(List<DailyWeather> dailyWeatherList) {
         List<String> dayList = new ArrayList<>();
 
         for (DailyWeather dailyWeather : dailyWeatherList) {

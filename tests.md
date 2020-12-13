@@ -10,3 +10,4 @@
 10. WeatherReport should contain forecast data with initialized fields
 11. DailyWeather should return date in correct format when given unix timestamp
 12. ForecastReport daily weather data should be in ascending order
+13. ForecastModeler should not return current date in forecast list

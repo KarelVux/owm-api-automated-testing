@@ -63,7 +63,8 @@ public class WeatherTime {
         ForecastData forecastWeatherData = weatherApi.get5DayForecastWeatherData(city);
 
         ForecastModeler forecastModeler = new ForecastModeler();
-        ForecastReport forecastReport = forecastModeler.getFormattedForecastFor5Days(forecastWeatherData);
+        ForecastReport forecastReport = new ForecastReport();
+        forecastReport.setDailyWeathers(forecastModeler.getFormattedForecastFor5Days(forecastWeatherData));
 
         WeatherReport weatherReport = getInitializedWeatherReport(city);
         weatherReport.setForecastReport(forecastReport);

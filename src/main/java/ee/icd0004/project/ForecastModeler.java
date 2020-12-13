@@ -4,15 +4,14 @@ import ee.icd0004.project.api.model.Forecast;
 import ee.icd0004.project.api.model.ForecastData;
 import ee.icd0004.project.api.model.Main;
 import ee.icd0004.project.model.DailyWeather;
-import ee.icd0004.project.model.ForecastReport;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 public class ForecastModeler {
-
-    public ForecastReport getFormattedForecastFor5Days(ForecastData forecastData) {
-        List<DailyWeather> weatherList = new ArrayList<>();
+    public List<DailyWeather> getFormattedForecastFor5Days(ForecastData forecastData) {
+        Map<String, DailyWeather> weatherMap = new HashMap<>();
 
         for (Forecast forecast : forecastData.getList()) {
             DailyWeather dailyWeather = new DailyWeather();
@@ -23,11 +22,31 @@ public class ForecastModeler {
             dailyWeather.setPressure(forecastMain.getPressure());
             dailyWeather.setHumidity(forecastMain.getHumidity());
 
-            weatherList.add(dailyWeather);
+            if (weatherMap.containsKey(dailyWeather.getDate())) {
+                DailyWeather weatherMapValue = weatherMap.get(dailyWeather.getDate());
+                weatherMapValue.setDate(dailyWeather.getDate());
+                weatherMapValue.setHumidity(dailyWeather.getHumidity());
+                weatherMapValue.setPressure(dailyWeather.getPressure());
+                weatherMapValue.setTemperature(dailyWeather.getTemperature());
+            } else {
+                weatherMap.put(dailyWeather.getDate(), dailyWeather);
+            }
         }
 
-        ForecastReport forecastReport = new ForecastReport();
-        forecastReport.setDailyWeathers(weatherList);
-        return forecastReport;
+        List<DailyWeather> allowedWeather = new ArrayList<>();
+        String currentDate = getCurrentDate();
+        for (String key : weatherMap.keySet()) {
+            if (!key.equals(currentDate)){
+                allowedWeather.add(weatherMap.get(key));
+            }
+        }
+
+        return allowedWeather;
+    }
+
+    private String getCurrentDate() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDateTime now = LocalDateTime.now();
+        return dtf.format(now);
     }
 }
