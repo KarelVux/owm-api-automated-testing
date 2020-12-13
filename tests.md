@@ -17,3 +17,4 @@
 17. JsonHandler should read existing input file
 18. JsonHandler should throw UnsupportedFileTypeException when given unsupported input filetype
 19. JsonHandler should throw FileNotFoundException when input file does not exist
+20. JsonHandler should create weather report json file
