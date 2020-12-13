@@ -17,9 +17,9 @@ public class JsonHandler {
         File file = new File(fileInputPath + name);
 
         if (!file.exists()) {
-            throw new FileNotFoundException("The system cannot find the file specified");
+            throw new FileNotFoundException(file + " The system cannot find the file specified");
         } else if (!file.getName().endsWith(".json")) {
-            throw new UnsupportedFileTypeException("File type is not supported");
+            throw new UnsupportedFileTypeException(file.getName() + " File type is not supported");
         }
 
         return objectMapper.readValue(file, City.class);
