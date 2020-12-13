@@ -1,5 +1,6 @@
 package ee.icd0004.project.unit;
 
+import ee.icd0004.project.exception.UnsupportedFileTypeException;
 import ee.icd0004.project.json.City;
 import ee.icd0004.project.json.JsonHandler;
 import org.junit.BeforeClass;
