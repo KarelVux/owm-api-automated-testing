@@ -38,7 +38,7 @@ public class JsonHandlerTest {
         assertThat(thrown).isInstanceOf(UnsupportedFileTypeException.class);
     }
     @Test
-    public void should_throw_exception_when_not_existing_file() throws IOException {
+    public void should_throw_exception_when_given_not_existing_file() {
         Throwable thrown = catchThrowable(() -> jsonHandler.readCityNameFromJsonFile("file_not_fount.json"));
 
         assertThat(thrown).isInstanceOf(FileNotFoundException.class);

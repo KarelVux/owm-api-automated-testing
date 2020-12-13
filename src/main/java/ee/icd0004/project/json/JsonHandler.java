@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class JsonHandler {
@@ -15,7 +16,9 @@ public class JsonHandler {
         ObjectMapper objectMapper = new ObjectMapper();
         File file = new File(fileInputPath + name);
 
-        if (!file.getName().endsWith(".json")){
+        if (!file.exists()) {
+            throw new FileNotFoundException("The system cannot find the file specified");
+        } else if (!file.getName().endsWith(".json")) {
             throw new UnsupportedFileTypeException("File type is not supported");
         }
 
