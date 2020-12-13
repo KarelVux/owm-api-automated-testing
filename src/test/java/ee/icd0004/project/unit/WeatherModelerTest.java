@@ -6,6 +6,7 @@ import ee.icd0004.project.api.model.Forecast;
 import ee.icd0004.project.api.model.ForecastData;
 import ee.icd0004.project.api.model.Main;
 import ee.icd0004.project.model.DailyWeather;
+import ee.icd0004.project.util.DateGenerator;
 import ee.icd0004.project.util.UnixTimeStampConverter;
 import org.junit.Test;
 
@@ -19,11 +20,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class WeatherModelerTest {
 
+    private ForecastData forecastData;
+    private ForecastModeler forecastModeler;
+    private List<String> dateList;
+
     @Test
     public void should_not_have_current_date() throws ParseException {
-        ForecastData forecastData = new ForecastData();
-        ForecastModeler forecastModeler = new ForecastModeler();
-        List<String> dateList = getFiveDatesFromCurrentDate();
+        initializeGlobalVariables();
         List<Forecast> forecastList = getInitializedForecastData(dateList);
         String currentDate = dateList.get(0);
 
@@ -35,9 +38,7 @@ public class WeatherModelerTest {
 
     @Test
     public void should_have_forecast_for_three_days() throws ParseException {
-        ForecastData forecastData = new ForecastData();
-        ForecastModeler forecastModeler = new ForecastModeler();
-        List<String> dateList = getFiveDatesFromCurrentDate();
+        initializeGlobalVariables();
         List<String> allowedDates = dateList.subList(1, 4);
         List<Forecast> forecastList = getInitializedForecastData(dateList);
 
@@ -45,6 +46,12 @@ public class WeatherModelerTest {
         List<DailyWeather> formattedForecastFor5Days = forecastModeler.getFormattedForecastFor3Days(forecastData);
 
         assertThat(getForecastModelerDates(formattedForecastFor5Days)).isEqualTo(allowedDates);
+    }
+
+    private void initializeGlobalVariables() {
+        forecastData = new ForecastData();
+        forecastModeler = new ForecastModeler();
+        dateList = new DateGenerator().getFiveDatesFromCurrentDate();
     }
 
     private List<Forecast> getInitializedForecastData(List<String> dateList) throws ParseException {
@@ -64,18 +71,6 @@ public class WeatherModelerTest {
         return forecastList;
     }
 
-    private List<String> getFiveDatesFromCurrentDate() {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDateTime now = LocalDateTime.now();
-        List<String> days = new ArrayList<>();
-
-        for (int day = 0; day < 5; day++) {
-            LocalDateTime allowedDay = now.plusDays(day);
-            days.add(dtf.format(allowedDay));
-        }
-
-        return days;
-    }
 
     private List<String> getForecastModelerDates(List<DailyWeather> dailyWeatherList) {
         List<String> dayList = new ArrayList<>();

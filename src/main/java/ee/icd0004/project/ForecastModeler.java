@@ -43,14 +43,14 @@ public class ForecastModeler {
     }
 
     private void removeDatesAccordingRules() {
-        for (String key : days()) {
+        for (String key : allowedDates()) {
             if (weatherMap.containsKey(key)) {
                 allowedWeatherDates.add(weatherMap.get(key));
             }
         }
     }
 
-    private List<String> days() {
+    private List<String> allowedDates() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime now = LocalDateTime.now();
         List<String> allowedDays = new ArrayList<>();
