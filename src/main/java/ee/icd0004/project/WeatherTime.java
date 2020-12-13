@@ -18,14 +18,14 @@ public class WeatherTime {
 
     public WeatherReport getWeatherReportForCity(String city, String temperatureUnit) {
         weatherApi.setUnits(temperatureUnit);
-        return getInitializedWeatherReport(city);
+        return getInitializedWeatherReportWithCurrentWeatherAndMainDetails(city);
     }
 
     public WeatherReport getWeatherReportForCity(String city) {
-        return getInitializedWeatherReport(city);
+        return getInitializedWeatherReportWithCurrentWeatherAndMainDetails(city);
     }
 
-    public WeatherReport getInitializedWeatherReport(String city) {
+    private WeatherReport getInitializedWeatherReportWithCurrentWeatherAndMainDetails(String city) {
         CurrentWeatherData currentWeatherData = weatherApi.getCurrentWeatherData(city);
         CurrentWeatherReport currentWeatherReport = getInitializedCurrentWeatherReport(currentWeatherData);
         WeatherReportDetails weatherReportDetails = getInitializedWeatherReportDetails(currentWeatherData);
@@ -66,7 +66,7 @@ public class WeatherTime {
         ForecastReport forecastReport = new ForecastReport();
         forecastReport.setDailyWeathers(forecastModeler.getFormattedForecastFor3Days(forecastWeatherData));
 
-        WeatherReport weatherReport = getInitializedWeatherReport(city);
+        WeatherReport weatherReport = getInitializedWeatherReportWithCurrentWeatherAndMainDetails(city);
         weatherReport.setForecastReport(forecastReport);
 
         return weatherReport;
