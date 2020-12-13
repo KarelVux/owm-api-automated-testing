@@ -46,6 +46,7 @@ public class WeatherApi {
 
     private ClientResponse getOwmApiConnectionData(String city, String resourceUrl) {
         Client client = getConfiguredClient();
+        client.setConnectTimeout(5000);
         return client.resource(resourceUrl)
                 .queryParam("q", city)
                 .queryParam("appId", API_KEY)
