@@ -15,7 +15,8 @@ public class JsonHandlerTest {
         JsonHandler jsonHandler = new JsonHandler();
         City actualCity = new City("Tallinn");
 
-        City cityFromJsonFile = jsonHandler.readCityNameFromJsonFile("city_name.json", "src/test/java/ee/icd0004/project/testFile/input/");
+        jsonHandler.setFileInputPath("src/test/java/ee/icd0004/project/testFile/input/");
+        City cityFromJsonFile = jsonHandler.readCityNameFromJsonFile("city_name.json");
 
         assertThat(cityFromJsonFile).isEqualTo(actualCity);
     }
