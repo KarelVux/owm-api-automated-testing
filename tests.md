@@ -14,4 +14,5 @@
 14. ForecastModeler should return 3 day weather prediction 
 15. ForecastModeler should contain average values for temperature, humidity and pressure
 16. Mocked WeatherReport should contain forecast data with initialized fields
-17. Should read existing file
+17. JsonHandler should read existing file
+18. JsonHandler should throw UnsupportedFileTypeException when given unsupported input filetype.
