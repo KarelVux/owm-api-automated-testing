@@ -5,7 +5,7 @@
 5. Coordinates in WeatherReportDetails class must be in format lat, log. Example: "59.44,24.75"
 6. Weather report measurement data should be in imperial
 7. WeatherReportDetails class will throw error, when temperature unit is not in allowed measurement unit list 
-8. WeatherReport should contain weather report main details
+8. Mocked WeatherReport should contain weather report main details
 9. WeatherApi should get connection from owm api's forecast data
 10. WeatherReport should contain forecast data with initialized fields
 11. DailyWeather should return date in correct format when given unix timestamp
@@ -13,3 +13,4 @@
 13. ForecastModeler should not return current date in forecast list
 14. ForecastModeler should return 3 day weather prediction 
 15. ForecastModeler should contain average values for temperature, humidity and pressure
+16. Mocked WeatherReport should contain forecast data with initialized fields
