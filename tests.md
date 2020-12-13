@@ -18,3 +18,4 @@
 18. JsonHandler should throw UnsupportedFileTypeException when given unsupported input filetype
 19. JsonHandler should throw FileNotFoundException when input file does not exist
 20. JsonHandler should create weather report json file
+21. WeatherReportEngine should create weather report json file while using OWM api
