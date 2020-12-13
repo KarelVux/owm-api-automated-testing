@@ -42,20 +42,16 @@ public class ForecastModeler {
     private void calculateAverageValues() {
         for (DailyWeather allowedWeather : allowedWeatherList) {
             String key = allowedWeather.getDate();
-            DailyWeather weatherMapValue = weatherMap.get(key);
-
-            weatherMapValue.setHumidity(weatherMapValue.getHumidity() / weatherElementCountMap.get(key));
-            weatherMapValue.setPressure(weatherMapValue.getPressure() / weatherElementCountMap.get(key));
-            weatherMapValue.setTemperature(weatherMapValue.getTemperature() / weatherElementCountMap.get(key));
+            allowedWeather.calculateAverage(weatherElementCountMap.get(key));
         }
     }
 
     private void sumUpDailyWeatherValuesInsideMap(DailyWeather dailyWeather) {
         DailyWeather weatherMapValue = weatherMap.get(dailyWeather.getDate());
         weatherMapValue.setDate(dailyWeather.getDate());
-        weatherMapValue.setHumidity(weatherMapValue.getHumidity() + dailyWeather.getHumidity());
-        weatherMapValue.setPressure(weatherMapValue.getPressure() + dailyWeather.getPressure());
-        weatherMapValue.setTemperature(weatherMapValue.getTemperature() + dailyWeather.getTemperature());
+        weatherMapValue.addHumidityValue(dailyWeather.getHumidity());
+        weatherMapValue.addPressureValue(dailyWeather.getPressure());
+        weatherMapValue.addTemperatureValue(dailyWeather.getTemperature());
     }
 
     private void addAllowedDaysToList() {
