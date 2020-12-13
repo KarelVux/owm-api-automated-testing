@@ -1,6 +1,7 @@
 package ee.icd0004.project.json;
 
 import ee.icd0004.project.exception.UnsupportedFileTypeException;
+import ee.icd0004.project.model.WeatherReport;
 import lombok.Setter;
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -12,7 +13,7 @@ public class JsonHandler {
     @Setter
     private String fileInputPath = "jsonOutput/inputData/";
 
-    public City readCityNameFromJsonFile(String name) throws IOException {
+    public City getCityNameFromJsonFile(String name) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         File file = new File(fileInputPath + name);
 
@@ -25,4 +26,14 @@ public class JsonHandler {
         return objectMapper.readValue(file, City.class);
     }
 
+    public void createWeatherReportJsonFile(WeatherReport weatherReport) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        File file = new File("src/test/java/ee/icd0004/project/testFile/output/" + weatherReport.getWeatherReportDetails().getCity() + ".json");
+
+        try {
+            objectMapper.writeValue(file, weatherReport);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
