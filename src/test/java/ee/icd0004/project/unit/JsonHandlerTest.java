@@ -16,12 +16,14 @@ import static org.assertj.core.api.Assertions.*;
 
 public class JsonHandlerTest {
     private static final String fileInputPath = "src/test/java/ee/icd0004/project/testFile/input/";
+    private static final String fileOutputPath = "src/test/java/ee/icd0004/project/testFile/output/";
     private static JsonHandler jsonHandler;
 
     @BeforeClass
     public static void setUp() {
         jsonHandler = new JsonHandler();
         jsonHandler.setFileInputPath(fileInputPath);
+        jsonHandler.setFileOutputPath(fileOutputPath);
     }
 
     @Test
@@ -48,16 +50,15 @@ public class JsonHandlerTest {
     }
 
     @Test
-    public void should_create_weather_report_json_file() {
+    public void should_create_weather_report_json_file() throws IOException {
         String cityName = "weather_report_output_test";
-        String fileOutputPath = "src/test/java/ee/icd0004/project/testFile/output/";
         String outputCityFilepath = fileOutputPath + cityName + ".json";
         WeatherReport weatherReport = getInitializedWeatherReport(cityName);
 
         jsonHandler.createWeatherReportJsonFile(weatherReport);
-        File file = new File(outputCityFilepath);
+        File outputFileLocation = new File(outputCityFilepath);
 
-        assertThat(contentOf(file)).contains(cityName);
+        assertThat(contentOf(outputFileLocation)).contains(cityName);
     }
 
     private WeatherReport getInitializedWeatherReport(String cityName) {

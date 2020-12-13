@@ -12,6 +12,8 @@ import java.io.IOException;
 public class JsonHandler {
     @Setter
     private String fileInputPath = "jsonOutput/inputData/";
+    @Setter
+    private String fileOutputPath = "jsonOutput/outputData/";
 
     public City getCityNameFromJsonFile(String name) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -26,14 +28,10 @@ public class JsonHandler {
         return objectMapper.readValue(file, City.class);
     }
 
-    public void createWeatherReportJsonFile(WeatherReport weatherReport) {
+    public void createWeatherReportJsonFile(WeatherReport weatherReport) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        File file = new File("src/test/java/ee/icd0004/project/testFile/output/" + weatherReport.getWeatherReportDetails().getCity() + ".json");
-
-        try {
-            objectMapper.writeValue(file, weatherReport);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String cityName = weatherReport.getWeatherReportDetails().getCity();
+        File file = new File(fileOutputPath + cityName + ".json");
+        objectMapper.writeValue(file, weatherReport);
     }
 }
