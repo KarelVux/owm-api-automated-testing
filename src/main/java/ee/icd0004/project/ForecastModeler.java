@@ -13,7 +13,7 @@ public class ForecastModeler {
     private Map<String, DailyWeather> weatherMap = new HashMap<>();
     private List<DailyWeather> allowedWeatherDates = new ArrayList<>();
 
-    public List<DailyWeather> getFormattedForecastFor5Days(ForecastData forecastData) {
+    public List<DailyWeather> getFormattedForecastFor3Days(ForecastData forecastData) {
         for (Forecast forecast : forecastData.getList()) {
             DailyWeather dailyWeather = new DailyWeather();
             dailyWeather.setDate(forecast.getDt());
@@ -43,17 +43,23 @@ public class ForecastModeler {
     }
 
     private void removeDatesAccordingRules() {
-        String currentDate = getCurrentDate();
-        for (String key : weatherMap.keySet()) {
-            if (!key.equals(currentDate)) {
+        for (String key : days()) {
+            if (weatherMap.containsKey(key)) {
                 allowedWeatherDates.add(weatherMap.get(key));
             }
         }
     }
 
-    private String getCurrentDate() {
+    private List<String> days() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime now = LocalDateTime.now();
-        return dtf.format(now);
+        List<String> allowedDays = new ArrayList<>();
+
+        for (int day = 1; day <= 3; day++) {
+            LocalDateTime allowedDay = now.plusDays(day);
+            allowedDays.add(dtf.format(allowedDay));
+        }
+
+        return allowedDays;
     }
 }
