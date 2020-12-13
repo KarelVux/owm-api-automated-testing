@@ -1,6 +1,7 @@
 package ee.icd0004.project.model;
 
 import lombok.NoArgsConstructor;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -8,6 +9,7 @@ import java.util.Date;
 
 @NoArgsConstructor
 public class DailyWeather extends AbstractDailyWeather {
+    @JsonIgnore
     public Date getDateAsDateType() throws ParseException {
         return new SimpleDateFormat("yyyy-MM-dd").parse(super.getDate());
     }

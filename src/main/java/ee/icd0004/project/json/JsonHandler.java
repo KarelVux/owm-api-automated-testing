@@ -11,9 +11,9 @@ import java.io.IOException;
 
 public class JsonHandler {
     @Setter
-    private String fileInputPath = "jsonOutput/inputData/";
+    private String fileInputPath = "createdWeatherReportJsonFiles/inputData/";
     @Setter
-    private String fileOutputPath = "jsonOutput/outputData/";
+    private String fileOutputPath = "createdWeatherReportJsonFiles/outputData/";
 
     public City getCityNameFromJsonFile(String name) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
