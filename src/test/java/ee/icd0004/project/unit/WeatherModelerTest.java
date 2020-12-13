@@ -28,9 +28,23 @@ public class WeatherModelerTest {
         String currentDate = dateList.get(0);
 
         forecastData.setList(forecastList);
-        List<DailyWeather> formattedForecastFor5Days = forecastModeler.getFormattedForecastFor5Days(forecastData);
+        List<DailyWeather> formattedForecastFor5Days = forecastModeler.getFormattedForecastFor3Days(forecastData);
 
         assertThat(getForecastModelerDates(formattedForecastFor5Days)).doesNotContain(currentDate);
+    }
+
+    @Test
+    public void should_have_forecast_for_three_days() throws ParseException {
+        ForecastData forecastData = new ForecastData();
+        ForecastModeler forecastModeler = new ForecastModeler();
+        List<String> dateList = getFiveDatesFromCurrentDate();
+        List<String> allowedDates = dateList.subList(1, 4);
+        List<Forecast> forecastList = getInitializedForecastData(dateList);
+
+        forecastData.setList(forecastList);
+        List<DailyWeather> formattedForecastFor5Days = forecastModeler.getFormattedForecastFor3Days(forecastData);
+
+        assertThat(getForecastModelerDates(formattedForecastFor5Days)).isEqualTo(allowedDates);
     }
 
     private List<Forecast> getInitializedForecastData(List<String> dateList) throws ParseException {
