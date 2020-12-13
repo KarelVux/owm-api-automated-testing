@@ -25,7 +25,7 @@ public class WeatherModelerTest {
     @Test
     public void should_not_have_current_date() throws ParseException {
         initializeGlobalVariables();
-        List<Forecast> forecastList = owmApiDataGenerator.getGeneratedForecastData(dateList);
+        List<Forecast> forecastList = owmApiDataGenerator.getGeneratedForecastDataWithDesignatedAverageValue(dateList);
         String currentDate = dateList.get(0);
 
         forecastData.setList(forecastList);
@@ -38,7 +38,7 @@ public class WeatherModelerTest {
     public void should_have_forecast_for_three_days() throws ParseException {
         initializeGlobalVariables();
         List<String> allowedDates = dateList.subList(1, 4);
-        List<Forecast> forecastList = owmApiDataGenerator.getGeneratedForecastData(dateList);
+        List<Forecast> forecastList = owmApiDataGenerator.getGeneratedForecastDataWithDesignatedAverageValue(dateList);
 
         forecastData.setList(forecastList);
         List<DailyWeather> formattedForecastFor3Days = forecastModeler.getFormattedForecastFor3Days(forecastData);
@@ -50,7 +50,7 @@ public class WeatherModelerTest {
     public void should_have_average_values_in_daily_weather_data() throws ParseException {
         initializeGlobalVariables();
         Double averageValue = 10.;
-        List<Forecast> forecastList = owmApiDataGenerator.getGeneratedForecastData(dateList, averageValue);
+        List<Forecast> forecastList = owmApiDataGenerator.getGeneratedForecastDataWithDesignatedAverageValue(dateList, averageValue);
         forecastData.setList(forecastList);
 
         List<DailyWeather> formattedForecastFor3Days = forecastModeler.getFormattedForecastFor3Days(forecastData);
