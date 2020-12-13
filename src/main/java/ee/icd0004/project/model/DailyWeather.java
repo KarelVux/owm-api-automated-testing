@@ -12,7 +12,7 @@ public class DailyWeather extends AbstractDailyWeather {
         return new SimpleDateFormat("yyyy-MM-dd").parse(super.getDate());
     }
 
-    public DailyWeather(Double humidity, Double pressure, Double temperature){
+    public DailyWeather(Double humidity, Double pressure, Double temperature) {
         super.setHumidity(humidity);
         super.setPressure(pressure);
         super.setTemperature(temperature);

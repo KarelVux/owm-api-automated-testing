@@ -11,7 +11,8 @@ import java.util.*;
 
 public class ForecastModeler {
     private Map<String, DailyWeather> weatherMap = new HashMap<>();
-    private List<DailyWeather> allowedWeatherDates = new ArrayList<>();
+    private Map<String, Double> weatherElementCountMap = new HashMap<>();
+    private List<DailyWeather> allowedWeatherList = new ArrayList<>();
 
     public List<DailyWeather> getFormattedForecastFor3Days(ForecastData forecastData) {
         for (Forecast forecast : forecastData.getList()) {
@@ -24,28 +25,43 @@ public class ForecastModeler {
             dailyWeather.setHumidity(forecastMain.getHumidity());
 
             if (weatherMap.containsKey(dailyWeather.getDate())) {
-                initializeDailyWeatherValuesInsideMap(dailyWeather);
+                sumUpDailyWeatherValuesInsideMap(dailyWeather);
+                Double elementCount = weatherElementCountMap.get(dailyWeather.getDate());
+                weatherElementCountMap.put(dailyWeather.getDate(), elementCount + 1);
             } else {
                 weatherMap.put(dailyWeather.getDate(), dailyWeather);
+                weatherElementCountMap.put(dailyWeather.getDate(), 1.);
             }
         }
-        removeDatesAccordingRules();
 
-        return allowedWeatherDates;
+        addAllowedDaysToList();
+        calculateAverageValues();
+        return allowedWeatherList;
     }
 
-    private void initializeDailyWeatherValuesInsideMap(DailyWeather dailyWeather) {
+    private void calculateAverageValues() {
+        for (DailyWeather allowedWeather : allowedWeatherList) {
+            String key = allowedWeather.getDate();
+            DailyWeather weatherMapValue = weatherMap.get(key);
+
+            weatherMapValue.setHumidity(weatherMapValue.getHumidity() / weatherElementCountMap.get(key));
+            weatherMapValue.setPressure(weatherMapValue.getPressure() / weatherElementCountMap.get(key));
+            weatherMapValue.setTemperature(weatherMapValue.getTemperature() / weatherElementCountMap.get(key));
+        }
+    }
+
+    private void sumUpDailyWeatherValuesInsideMap(DailyWeather dailyWeather) {
         DailyWeather weatherMapValue = weatherMap.get(dailyWeather.getDate());
         weatherMapValue.setDate(dailyWeather.getDate());
-        weatherMapValue.setHumidity(dailyWeather.getHumidity());
-        weatherMapValue.setPressure(dailyWeather.getPressure());
-        weatherMapValue.setTemperature(dailyWeather.getTemperature());
+        weatherMapValue.setHumidity(weatherMapValue.getHumidity() + dailyWeather.getHumidity());
+        weatherMapValue.setPressure(weatherMapValue.getPressure() + dailyWeather.getPressure());
+        weatherMapValue.setTemperature(weatherMapValue.getTemperature() + dailyWeather.getTemperature());
     }
 
-    private void removeDatesAccordingRules() {
+    private void addAllowedDaysToList() {
         for (String key : allowedDates()) {
             if (weatherMap.containsKey(key)) {
-                allowedWeatherDates.add(weatherMap.get(key));
+                allowedWeatherList.add(weatherMap.get(key));
             }
         }
     }
