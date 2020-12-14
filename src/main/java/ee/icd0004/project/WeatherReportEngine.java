@@ -15,9 +15,9 @@ public class WeatherReportEngine {
     }
 
     public void createWeatherReportJsonFile(String fileName) throws IOException {
-        City cityName = jsonHandler.getCityNameFromJsonFile(fileName);
+        City city = jsonHandler.getCityNameFromJsonFile(fileName);
         WeatherTime weatherTime = new WeatherTime(new WeatherApi());
-        WeatherReport weatherReport = weatherTime.getWeatherReportForCityWithForecast(cityName.getCity());
+        WeatherReport weatherReport = weatherTime.getWeatherReportForCityWithForecast(city.getCity());
         jsonHandler.createWeatherReportJsonFile(weatherReport);
     }
 
