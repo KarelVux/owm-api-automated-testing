@@ -8,6 +8,8 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.contentOf;
@@ -87,16 +89,17 @@ public class WeatherReportEngineTest {
     @Test
     public void should_create_weather_report_log_file_containing_info() throws IOException {
         String fileName = "city_names_with_for_logger.json";
+        List<String> containingLogMessages = Arrays.asList(
+                "WARNING: City not found (fake1).",
+                "WARNING: City not found (fake2).",
+                "WARNING: City not found (fake3).",
+                "INFO: File Sindi.json for city Sindi will be overwritten");
 
         weatherReportEngine.createWeatherReportJsonFile(fileName);
-        String logName = "owmLogger.log";
-        File logFile = new File("../logs/" + logName);
+        String logName = "owmLog.log";
+        File logFile = new File("logs/" + logName);
 
-        assertThat(contentOf(logFile)).isNotEmpty()
-                .contains("WARNING: City not found (fakea[sopifgjk[apofigja[epirgj).")
-                .contains("WARNING: City not found (fakefdigyhirteunfrgiufihdufdf).")
-                .contains("WARNING: City not found (fakeogrgopidfjoijotuejrtg.")
-                .contains("INFO: File Sindi.json for city Sindi will be overwritten");
+        assertThat(contentOf(logFile)).isNotEmpty().contains(containingLogMessages);
     }
 
 

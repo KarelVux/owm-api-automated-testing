@@ -11,6 +11,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import static com.sun.jersey.api.client.Client.create;
 import static com.sun.jersey.api.json.JSONConfiguration.FEATURE_POJO_MAPPING;
 
@@ -28,7 +31,8 @@ public class WeatherApi {
         try {
             response = getOwmApiConnectionData(city, resourceUrl);
         } catch (InvalidCityNameException e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+            logger.log(Level.WARNING, String.format("City not found (%s). ", city), e);
             return null;
         }
 
@@ -50,7 +54,8 @@ public class WeatherApi {
         try {
             response = getOwmApiConnectionData(city, resourceUrl);
         } catch (InvalidCityNameException e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+            logger.log(Level.WARNING, String.format("City not found (%s). ", city), e);
             return null;
         }
 
@@ -65,7 +70,7 @@ public class WeatherApi {
                 .queryParam("appId", API_KEY)
                 .queryParam("units", units)
                 .get(ClientResponse.class);
-        if (response.getStatus() == 404){
+        if (response.getStatus() == 404) {
             throw new InvalidCityNameException(String.format("City not found (%s)", city));
         }
         return response;

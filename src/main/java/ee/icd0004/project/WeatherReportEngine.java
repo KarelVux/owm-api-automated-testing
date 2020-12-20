@@ -6,9 +6,11 @@ import ee.icd0004.project.json.JsonHandler;
 import ee.icd0004.project.model.WeatherReport;
 
 import java.io.IOException;
+import java.util.logging.*;
 
 public class WeatherReportEngine {
     private final JsonHandler jsonHandler;
+    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     public WeatherReportEngine() {
         jsonHandler = new JsonHandler();
@@ -17,6 +19,19 @@ public class WeatherReportEngine {
     public void createWeatherReportJsonFile(String fileName) throws IOException {
         City city = jsonHandler.getCityNameFromJsonFile(fileName);
         WeatherTime weatherTime = new WeatherTime(new WeatherApi());
+
+        LogManager.getLogManager().reset();
+        logger.setLevel(Level.ALL);
+
+        ConsoleHandler consoleHandler = new ConsoleHandler();
+        consoleHandler.setLevel(Level.INFO);
+        logger.addHandler(consoleHandler);
+
+        FileHandler fileHandler = new FileHandler("logs/owmLog.log");
+        fileHandler.setFormatter(new SimpleFormatter());
+        logger.addHandler(fileHandler);
+
+
         for (String cityName : city.getCityList()) {
             WeatherReport weatherReport = weatherTime.getWeatherReportForCityWithForecast(cityName);
 

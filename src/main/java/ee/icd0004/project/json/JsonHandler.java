@@ -8,6 +8,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class JsonHandler {
     @Setter
@@ -32,6 +34,12 @@ public class JsonHandler {
         ObjectMapper objectMapper = new ObjectMapper();
         String cityName = weatherReport.getWeatherReportDetails().getCity();
         File file = new File(fileOutputPath + cityName + ".json");
+
+        if (file.exists()) {
+            Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+            logger.log(Level.INFO, String.format("File %s for city %s will be overwritten", cityName + ".json", cityName));
+        }
+
         objectMapper.writeValue(file, weatherReport);
     }
 }
