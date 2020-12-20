@@ -40,7 +40,7 @@ public class WeatherReportEngine {
         consoleHandler.setLevel(Level.INFO);
         logger.addHandler(consoleHandler);
 
-        FileHandler fileHandler = new FileHandler("logs/owmLog.log", true);
+        FileHandler fileHandler = new FileHandler("logs/owmLog.log");
         fileHandler.setFormatter(new SimpleFormatter());
         logger.addHandler(fileHandler);
     }
