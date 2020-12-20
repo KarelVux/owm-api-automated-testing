@@ -1,10 +1,25 @@
-java:
-  stage: test
+stages:
+  - build
+  - verify
+
+build:
+  image: maven:3.6.3-jdk-8
+  stage: build
   script:
-    - mvn verify
-  artifacts:
-    when: always
-    reports:
-      junit:
-        - target/surefire-reports/TEST-*.xml
-        - target/failsafe-reports/TEST-*.xml
+    - mvn compile
+
+api_tests:
+  image: maven:3.6.3-jdk-8
+  stage: verify
+  script:
+    - mvn '-Dtest=ee.icd0004.project.*integration' test
+main_details_test:
+  image: maven:3.6.3-jdk-8
+  stage: verify
+  script:
+    - mvn '-Dtest=ee.icd0004.project.*mock' test
+current_weather_tests:
+  image: maven:3.6.3-jdk-8
+  stage: verify
+  script:
+    - mvn '-Dtest=ee.icd0004.project.*unit' test
