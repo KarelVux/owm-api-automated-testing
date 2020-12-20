@@ -24,13 +24,13 @@ First you will write a failing test. After you will write implementation that co
 ```
 **Scenario**: Enter false parameter to make a calculation 
     **Given** the input "1,False" 
-    **When** the method ```calculate()``` is called 
+    **When** the method calculate() is called 
     **Then** i should see NumberFormatException
 ```
 
 ```
 **Scenario**: Make calculation 
     **Given** the input "-2,-5" 
-    **When** the method ```calculate()``` is called 
+    **When** the method calculate() is called 
     **Then** i should see -7
 ```
