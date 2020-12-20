@@ -8,8 +8,6 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.contentOf;
@@ -48,20 +46,20 @@ public class WeatherReportEngineTest {
     @Test
     public void should_create_weather_report_with_multiple_city_names_json_file() throws IOException {
         String fileName = "city_names_with_multiple_names.json";
-        List<String> cityNames = Arrays.asList("Tallinn", "Tartu", "Keila", "Narva");
+        City city = fileReader(fileInputPath, fileName);
 
         String outputPath = fileOutputPath + "multipleCities/";
         weatherReportEngine.setFileOutputPath(outputPath);
         weatherReportEngine.createWeatherReportJsonFile(fileName);
 
-        for (String city : cityNames) {
-            String outputCityFilepath = outputPath + city + ".json";
+        for (String cityName : city.getCityList()) {
+            String outputCityFilepath = outputPath + cityName + ".json";
             File outputFileLocation = new File(outputCityFilepath);
 
             assertThat(contentOf(outputFileLocation))
                     .isNotNull()
                     .isNotEmpty()
-                    .contains(city);
+                    .contains(cityName);
         }
     }
 
