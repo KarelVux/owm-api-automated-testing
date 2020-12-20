@@ -50,3 +50,21 @@ To run all tests use command:
 ```
 mvn test
 ```
+
+## Commit messages
+This project was developed my using test driven development method. 
+Commit messages base layout:
+```
+[Test number]: [Test step], [Description]
+```
+
+```[Test number]``` - All cases are written in ```tests.md```
+
+```[Test step]``` - Describes in what stage of development is current code
+
+```[Description]``` - Given field will be added when needed
+
+Example:
+```
+REQ 18: Add failing test, unsupported filetype
+```
