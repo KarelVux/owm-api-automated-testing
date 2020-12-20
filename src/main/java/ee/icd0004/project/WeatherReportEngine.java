@@ -19,6 +19,10 @@ public class WeatherReportEngine {
         WeatherTime weatherTime = new WeatherTime(new WeatherApi());
         for (String cityName : city.getCityList()) {
             WeatherReport weatherReport = weatherTime.getWeatherReportForCityWithForecast(cityName);
+
+            if (weatherReport == null) {
+                continue;
+            }
             jsonHandler.createWeatherReportJsonFile(weatherReport);
         }
 

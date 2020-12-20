@@ -27,6 +27,11 @@ public class WeatherTime {
 
     private WeatherReport getInitializedWeatherReportWithCurrentWeatherAndMainDetails(String city) {
         CurrentWeatherData currentWeatherData = weatherApi.getCurrentWeatherData(city);
+        if (currentWeatherData == null) {
+            return null;
+        }
+
+
         CurrentWeatherReport currentWeatherReport = getInitializedCurrentWeatherReport(currentWeatherData);
         WeatherReportDetails weatherReportDetails = getInitializedWeatherReportDetails(currentWeatherData);
 
@@ -61,6 +66,10 @@ public class WeatherTime {
 
     public WeatherReport getWeatherReportForCityWithForecast(String city) {
         ForecastData forecastWeatherData = weatherApi.get5DayForecastWeatherData(city);
+
+        if (forecastWeatherData == null) {
+            return null;
+        }
 
         ForecastModeler forecastModeler = new ForecastModeler();
         ForecastReport forecastReport = new ForecastReport();

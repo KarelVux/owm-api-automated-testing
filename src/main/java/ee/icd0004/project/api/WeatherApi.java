@@ -6,6 +6,7 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import ee.icd0004.project.api.model.CurrentWeatherData;
 import ee.icd0004.project.api.model.ForecastData;
+import ee.icd0004.project.exception.InvalidCityNameException;
 import lombok.Getter;
 import lombok.Setter;
 import org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider;
@@ -25,6 +26,15 @@ public class WeatherApi {
         String resourceUrl = BASE_URL + "/weather";
         ClientResponse response = getOwmApiConnectionData(city, resourceUrl);
 
+        if (response.getStatus() == 404){
+            try {
+                throw new InvalidCityNameException(String.format("Given city name does not exist (%s)",city));
+            } catch (InvalidCityNameException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
         return response.getEntity(CurrentWeatherData.class);
     }
 
@@ -40,6 +50,15 @@ public class WeatherApi {
         // https://openweathermap.org/forecast5
         String resourceUrl = BASE_URL + "/forecast";
         ClientResponse response = getOwmApiConnectionData(city, resourceUrl);
+
+        if (response.getStatus() == 404){
+            try {
+                throw new InvalidCityNameException(String.format("Given city name does not exist (%s)",city));
+            } catch (InvalidCityNameException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
 
         return response.getEntity(ForecastData.class);
     }
