@@ -8,17 +8,17 @@ build:
   script:
     - mvn compile
 
-api_tests:
+integration_tests:
   image: maven:3.6.3-jdk-8
   stage: verify
   script:
     - mvn '-Dtest=ee.icd0004.project.integration.*Test' test
-main_details_test:
+mock_test:
   image: maven:3.6.3-jdk-8
   stage: verify
   script:
     - mvn '-Dtest=ee.icd0004.project.mock.*Test' test
-current_weather_tests:
+unit_tests:
   image: maven:3.6.3-jdk-8
   stage: verify
   script:
