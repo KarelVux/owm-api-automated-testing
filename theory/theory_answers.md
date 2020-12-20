@@ -32,5 +32,5 @@ First you will write a failing test. After you will write implementation that co
 **Scenario**: Make calculation 
     **Given** the input "-2,-5" 
     **When** the method ```calculate()``` is called 
-    **Then** i should see -5
+    **Then** i should see -7
 ```
