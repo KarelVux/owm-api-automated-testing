@@ -1,3 +1,5 @@
 {
-  "city": "Tallinn"
+  "cityList": [
+    "Tallinn"
+  ]
 }

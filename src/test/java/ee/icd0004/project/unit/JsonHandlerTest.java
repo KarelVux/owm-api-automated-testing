@@ -11,6 +11,7 @@ import org.junit.Test;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -28,7 +29,7 @@ public class JsonHandlerTest {
 
     @Test
     public void should_read_existing_city_names_from_json_file() throws IOException {
-        City actualCity = new City("Tallinn");
+        City actualCity = new City(Arrays.asList("Tallinn"));
 
         City cityFromJsonFile = jsonHandler.getCityNameFromJsonFile("city_name.json");
 
