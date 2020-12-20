@@ -6,6 +6,24 @@ Use given code to install mvn dependencies and run project tests in src/test fol
 ```
 mvn install
 ```
+Use given code to install mvn dependencies and skip tests.
+
+```
+mvn -Dmaven.test.skip=true package
+```
+
+## Team
+Author of this project is Karel Vuks
+
+## Technological stack
+* JDK 8
+* Maven
+* Junit
+* Rest assured
+* Assertj core
+* Mockito core
+* Jersey client
+* Jersey json
 
 ## Usage
 To get current weather report and 3 day forecast. You must activate command:
@@ -13,5 +31,22 @@ To get current weather report and 3 day forecast. You must activate command:
 mvn exec:java -Dexec.mainClass=ee.icd0004.project.OwmForecastRequester
 ```
 This  will activate class `src/main/java/ee/icd0004/project/OwmForecastRequester.java`.
-By default, program will read city names form `createdWeatherReportJsonFiles/inputData/info.json` file and generate weather report to  `createdWeatherReportJsonFiles/outputData` directory.
 
+By default, program will read city names form `createdWeatherReportJsonFiles/inputData/info.json` file. All porgram inputfiles must be in json format.
+
+**Example input file:**
+```
+{
+  "cityList": [
+    "Tallinn",
+    "Keila"
+  ]
+}
+```
+Generated weather reports will be stored inside `createdWeatherReportJsonFiles/outputData` directory.
+
+## Running tests
+To run all tests use command:
+```
+mvn test
+```
