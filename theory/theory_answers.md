@@ -22,15 +22,14 @@ First you will write a failing test. After you will write implementation that co
 ### 5. Write 2 test cases or scenarios for a String Calculator application, which has a method ```calculate()``` that takes a string of two numbers separated by a comma as input, and returns the sum.
 
 ```
-**Scenario**: Enter false parameter to make a calculation 
-    **Given** the input "1,False" 
-    **When** the method calculate() is called 
-    **Then** i should see NumberFormatException
+Scenario: Enter false parameter to make a calculation 
+    Given: the input "1,False" 
+    When: the method calculate() is called 
+    Then: I should see NumberFormatException
 ```
-
 ```
-**Scenario**: Make calculation 
-    **Given** the input "-2,-5" 
-    **When** the method calculate() is called 
-    **Then** i should see -7
+Scenario: Make calculation 
+    Given: the input "-2,-5" 
+    When: the method calculate() is called 
+    Then: I should see -7
 ```
