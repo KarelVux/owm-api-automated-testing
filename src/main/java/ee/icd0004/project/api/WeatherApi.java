@@ -23,15 +23,16 @@ public class WeatherApi {
     @Setter
     @Getter
     private String units = "metric";
+    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
 
     public CurrentWeatherData getCurrentWeatherData(String city) {
         // https://openweathermap.org/current
         String resourceUrl = BASE_URL + "/weather";
-        ClientResponse response = null;
+        ClientResponse response;
         try {
             response = getOwmApiConnectionData(city, resourceUrl);
         } catch (InvalidCityNameException e) {
-            Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
             logger.log(Level.WARNING, String.format("City not found (%s). ", city), e);
             return null;
         }
@@ -54,7 +55,6 @@ public class WeatherApi {
         try {
             response = getOwmApiConnectionData(city, resourceUrl);
         } catch (InvalidCityNameException e) {
-            Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
             logger.log(Level.WARNING, String.format("City not found (%s). ", city), e);
             return null;
         }

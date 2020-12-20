@@ -16,6 +16,7 @@ public class JsonHandler {
     private String fileInputPath = "createdWeatherReportJsonFiles/inputData/";
     @Setter
     private String fileOutputPath = "createdWeatherReportJsonFiles/outputData/";
+    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     public City getCityNameFromJsonFile(String name) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -26,7 +27,6 @@ public class JsonHandler {
         } else if (!file.getName().endsWith(".json")) {
             throw new UnsupportedFileTypeException(file.getName() + " File type is not supported");
         }
-
         return objectMapper.readValue(file, City.class);
     }
 
@@ -36,10 +36,8 @@ public class JsonHandler {
         File file = new File(fileOutputPath + cityName + ".json");
 
         if (file.exists()) {
-            Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
             logger.log(Level.INFO, String.format("File %s for city %s will be overwritten", cityName + ".json", cityName));
         }
-
         objectMapper.writeValue(file, weatherReport);
     }
 }

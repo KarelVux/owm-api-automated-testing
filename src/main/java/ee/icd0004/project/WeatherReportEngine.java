@@ -20,6 +20,19 @@ public class WeatherReportEngine {
         City city = jsonHandler.getCityNameFromJsonFile(fileName);
         WeatherTime weatherTime = new WeatherTime(new WeatherApi());
 
+        initializeOwmApiLogger();
+
+        for (String cityName : city.getCityList()) {
+            WeatherReport weatherReport = weatherTime.getWeatherReportForCityWithForecast(cityName);
+            if (weatherReport == null) {
+                continue;
+            }
+            jsonHandler.createWeatherReportJsonFile(weatherReport);
+        }
+    }
+
+    private void initializeOwmApiLogger() throws IOException {
+        // https://www.youtube.com/watch?v=W0_Man88Z3Q
         LogManager.getLogManager().reset();
         logger.setLevel(Level.ALL);
 
@@ -30,17 +43,6 @@ public class WeatherReportEngine {
         FileHandler fileHandler = new FileHandler("logs/owmLog.log");
         fileHandler.setFormatter(new SimpleFormatter());
         logger.addHandler(fileHandler);
-
-
-        for (String cityName : city.getCityList()) {
-            WeatherReport weatherReport = weatherTime.getWeatherReportForCityWithForecast(cityName);
-
-            if (weatherReport == null) {
-                continue;
-            }
-            jsonHandler.createWeatherReportJsonFile(weatherReport);
-        }
-
     }
 
     public void setFileInputPath(String fileInputPath) {
