@@ -12,14 +12,14 @@ api_tests:
   image: maven:3.6.3-jdk-8
   stage: verify
   script:
-    - mvn '-Dtest=ee.icd0004.project.*integration' test
+    - mvn '-Dtest=ee.icd0004.project.integration.*' test
 main_details_test:
   image: maven:3.6.3-jdk-8
   stage: verify
   script:
-    - mvn '-Dtest=ee.icd0004.project.*mock' test
+    - mvn '-Dtest=ee.icd0004.project.mock.*' test
 current_weather_tests:
   image: maven:3.6.3-jdk-8
   stage: verify
   script:
-    - mvn '-Dtest=ee.icd0004.project.*unit' test
+    - mvn '-Dtest=ee.icd0004.project.unit.*' test
