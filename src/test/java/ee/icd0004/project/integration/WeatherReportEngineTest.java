@@ -26,7 +26,6 @@ public class WeatherReportEngineTest {
 
     }
 
-
     @Test
     public void should_create_weather_report_with_forecast_json_file() throws IOException {
         String fileName = "city_name.json";
@@ -76,13 +75,28 @@ public class WeatherReportEngineTest {
 
             if (cityName.startsWith("fake")) {
                 assertThat(outputFileLocation).doesNotExist();
-            } else{
+            } else {
                 assertThat(contentOf(outputFileLocation))
                         .isNotNull()
                         .isNotEmpty()
                         .contains(cityName);
             }
         }
+    }
+
+    @Test
+    public void should_create_weather_report_log_file_containing_info() throws IOException {
+        String fileName = "city_names_with_for_logger.json";
+
+        weatherReportEngine.createWeatherReportJsonFile(fileName);
+        String logName = "owmLogger.log";
+        File logFile = new File("../logs/" + logName);
+
+        assertThat(contentOf(logFile)).isNotEmpty()
+                .contains("WARNING: City not found (fakea[sopifgjk[apofigja[epirgj).")
+                .contains("WARNING: City not found (fakefdigyhirteunfrgiufihdufdf).")
+                .contains("WARNING: City not found (fakeogrgopidfjoijotuejrtg.")
+                .contains("INFO: File Sindi.json for city Sindi will be overwritten");
     }
 
 
