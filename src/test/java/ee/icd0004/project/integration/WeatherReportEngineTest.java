@@ -31,4 +31,23 @@ public class WeatherReportEngineTest {
                 .contains(cityName);
 
     }
+
+    @Test
+    public void create_weather_report_with_multiple_city_names_json_file() throws IOException {
+        String fileName = "city_names_with_multiple_names.json";
+        String cityName = "Tallinn";
+        WeatherReportEngine weatherReportEngine = new WeatherReportEngine();
+        weatherReportEngine.setFileInputPath(fileInputPath);
+        weatherReportEngine.setFileOutputPath(fileOutputPath);
+
+        weatherReportEngine.createWeatherReportJsonFile(fileName);
+        String outputCityFilepath = fileOutputPath + cityName + ".json";
+        File outputFileLocation = new File(outputCityFilepath);
+
+        assertThat(contentOf(outputFileLocation))
+                .isNotNull()
+                .isNotEmpty()
+                .contains(cityName);
+
+    }
 }
