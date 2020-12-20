@@ -19,20 +19,17 @@ public class WeatherApi {
     private static final String API_KEY = "3a67da1c6356383a2537495317e64315";
     @Setter
     @Getter
-    private  String units = "metric";
+    private String units = "metric";
 
     public CurrentWeatherData getCurrentWeatherData(String city) {
         // https://openweathermap.org/current
         String resourceUrl = BASE_URL + "/weather";
-        ClientResponse response = getOwmApiConnectionData(city, resourceUrl);
-
-        if (response.getStatus() == 404){
-            try {
-                throw new InvalidCityNameException(String.format("Given city name does not exist (%s)",city));
-            } catch (InvalidCityNameException e) {
-                e.printStackTrace();
-                return null;
-            }
+        ClientResponse response = null;
+        try {
+            response = getOwmApiConnectionData(city, resourceUrl);
+        } catch (InvalidCityNameException e) {
+            e.printStackTrace();
+            return null;
         }
 
         return response.getEntity(CurrentWeatherData.class);
@@ -49,27 +46,28 @@ public class WeatherApi {
     public ForecastData get5DayForecastWeatherData(String city) {
         // https://openweathermap.org/forecast5
         String resourceUrl = BASE_URL + "/forecast";
-        ClientResponse response = getOwmApiConnectionData(city, resourceUrl);
-
-        if (response.getStatus() == 404){
-            try {
-                throw new InvalidCityNameException(String.format("Given city name does not exist (%s)",city));
-            } catch (InvalidCityNameException e) {
-                e.printStackTrace();
-                return null;
-            }
+        ClientResponse response;
+        try {
+            response = getOwmApiConnectionData(city, resourceUrl);
+        } catch (InvalidCityNameException e) {
+            e.printStackTrace();
+            return null;
         }
 
         return response.getEntity(ForecastData.class);
     }
 
-    private ClientResponse getOwmApiConnectionData(String city, String resourceUrl) {
+    private ClientResponse getOwmApiConnectionData(String city, String resourceUrl) throws InvalidCityNameException {
         Client client = getConfiguredClient();
         client.setConnectTimeout(5000);
-        return client.resource(resourceUrl)
+        ClientResponse response = client.resource(resourceUrl)
                 .queryParam("q", city)
                 .queryParam("appId", API_KEY)
                 .queryParam("units", units)
                 .get(ClientResponse.class);
+        if (response.getStatus() == 404){
+            throw new InvalidCityNameException(String.format("City not found (%s)", city));
+        }
+        return response;
     }
 }

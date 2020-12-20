@@ -1,8 +1,8 @@
 package ee.icd0004.project.integration;
 
 import ee.icd0004.project.WeatherReportEngine;
-import ee.icd0004.project.WeatherTime;
-import ee.icd0004.project.api.WeatherApi;
+import ee.icd0004.project.json.City;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -68,15 +68,29 @@ public class WeatherReportEngineTest {
     @Test
     public void should_create_weather_report_json_file_with_correct_city_names() throws IOException {
         String fileName = "city_names_with_correct_names.json";
-        String city = "Sindi";
+        City city = fileReader(fileInputPath, fileName);
 
         weatherReportEngine.createWeatherReportJsonFile(fileName);
-        String outputCityFilepath = fileOutputPath + city + ".json";
-        File outputFileLocation = new File(outputCityFilepath);
 
-        assertThat(contentOf(outputFileLocation))
-                .isNotNull()
-                .isNotEmpty()
-                .contains(city);
+        for (String cityName : city.getCityList()) {
+            String outputCityFilepath = fileOutputPath + cityName + ".json";
+            File outputFileLocation = new File(outputCityFilepath);
+
+            if (cityName.startsWith("fake")) {
+                assertThat(outputFileLocation).doesNotExist();
+            } else{
+                assertThat(contentOf(outputFileLocation))
+                        .isNotNull()
+                        .isNotEmpty()
+                        .contains(cityName);
+            }
+        }
+    }
+
+
+    private City fileReader(String path, String name) throws IOException {
+        File file = new File(path + name);
+
+        return new ObjectMapper().readValue(file, City.class);
     }
 }
