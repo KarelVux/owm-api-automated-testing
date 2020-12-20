@@ -20,3 +20,4 @@
 20. JsonHandler should create weather report json file
 21. WeatherReportEngine should create weather report json file while using OWM api
 22. WeatherReportEngine should create weather report json file with multiple cities
+23. WeatherReportEngine should create weather report json file only for existing cities

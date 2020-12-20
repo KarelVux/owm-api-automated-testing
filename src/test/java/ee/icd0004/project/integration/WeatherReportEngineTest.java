@@ -30,7 +30,7 @@ public class WeatherReportEngineTest {
 
 
     @Test
-    public void create_weather_report_with_forecast_json_file() throws IOException {
+    public void should_create_weather_report_with_forecast_json_file() throws IOException {
         String fileName = "city_name.json";
         String cityName = "Tallinn";
 
@@ -46,7 +46,7 @@ public class WeatherReportEngineTest {
     }
 
     @Test
-    public void create_weather_report_with_multiple_city_names_json_file() throws IOException {
+    public void should_create_weather_report_with_multiple_city_names_json_file() throws IOException {
         String fileName = "city_names_with_multiple_names.json";
         List<String> cityNames = Arrays.asList("Tallinn", "Tartu", "Keila", "Narva");
 
@@ -63,5 +63,20 @@ public class WeatherReportEngineTest {
                     .isNotEmpty()
                     .contains(city);
         }
+    }
+
+    @Test
+    public void should_create_weather_report_json_file_with_correct_city_names() throws IOException {
+        String fileName = "city_names_with_correct_names.json";
+        String city = "Sindi";
+
+        weatherReportEngine.createWeatherReportJsonFile(fileName);
+        String outputCityFilepath = fileOutputPath + city + ".json";
+        File outputFileLocation = new File(outputCityFilepath);
+
+        assertThat(contentOf(outputFileLocation))
+                .isNotNull()
+                .isNotEmpty()
+                .contains(city);
     }
 }
